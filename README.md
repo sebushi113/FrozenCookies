@@ -1,7 +1,10 @@
 ***********
 ***********
 
-NOT WORKING *don't use*
+NOT WORKING
+
+*don't use*
+
 (use https://github.com/Mtarnuhal/FrozenCookies)
 
 ***********
