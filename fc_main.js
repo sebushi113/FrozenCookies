@@ -552,6 +552,23 @@ function updateCursorMax(base) {
     }
 }
 
+function getGrandmaMax(current) {
+    var newMax = prompt('How many Grammamas should Autobuy stop at?', current);
+    if (typeof(newMax) == 'undefined' || newMax == null || isNaN(Number(newMax)) || Number(newMax < 0)) {
+        newMax = current;
+    }
+    return Number(newMax);
+}
+
+function updateGrandmaMax(base) {
+    var newMax = getCursorMax(FrozenCookies[base]);
+    if (newMax != FrozenCookies[base]) {
+        FrozenCookies[base] = newMax;
+        updateLocalStorage();
+        FCStart();
+    }
+}
+
 function getFarmMax(current) {
     var newMax2 = prompt('How many Farms should Autobuy stop at?', current);
     if (typeof(newMax2) == 'undefined' || newMax2 == null || isNaN(Number(newMax2)) || Number(newMax2 < 0)) {
@@ -561,6 +578,23 @@ function getFarmMax(current) {
 }
 
 function updateFarmMax(base) {
+    var newMax2 = getFarmMax(FrozenCookies[base]);
+    if (newMax2 != FrozenCookies[base]) {
+        FrozenCookies[base] = newMax2;
+        updateLocalStorage();
+        FCStart();
+    }
+}
+
+function getMinesMax(current) {
+    var newMax2 = prompt('How many Minezzz should Autobuy stop at?', current);
+    if (typeof(newMax2) == 'undefined' || newMax2 == null || isNaN(Number(newMax2)) || Number(newMax2 < 0)) {
+        newMax2 = current;
+    }
+    return Number(newMax2);
+}
+
+function updateMinesMax(base) {
     var newMax2 = getFarmMax(FrozenCookies[base]);
     if (newMax2 != FrozenCookies[base]) {
         FrozenCookies[base] = newMax2;
