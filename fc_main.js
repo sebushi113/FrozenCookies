@@ -1361,8 +1361,28 @@ function buildingStats(recalculate) {
             if (FrozenCookies.cursorLimit && Game.Objects['Cursor'].amount >= FrozenCookies.cursorMax) {
                 buildingBlacklist.push(0);
             }
+            //grandmas
+            if (FrozenCookies.cursorLimit && Game.Objects['Grandma'].amount >= FrozenCookies.cursorMax) {
+                buildingBlacklist.push(0);
+            }
             //Stop buying Farms if at set limit
             if (FrozenCookies.farmLimit && Game.Objects['Farm'].amount >= FrozenCookies.farmMax) {
+                buildingBlacklist.push(2);
+            }
+            //mines
+            if (FrozenCookies.farmLimit && Game.Objects['Mine'].amount >= FrozenCookies.farmMax) {
+                buildingBlacklist.push(2);
+            }
+            //factories
+            if (FrozenCookies.farmLimit && Game.Objects['Factory'].amount >= FrozenCookies.farmMax) {
+                buildingBlacklist.push(2);
+            }
+            //banks
+            if (FrozenCookies.farmLimit && Game.Objects['Bank'].amount >= FrozenCookies.farmMax) {
+                buildingBlacklist.push(2);
+            }
+            //temples
+            if (FrozenCookies.farmLimit && Game.Objects['Temple'].amount >= FrozenCookies.farmMax) {
                 buildingBlacklist.push(2);
             }
             FrozenCookies.caches.buildings = Game.ObjectsById.map(function (current, index) {
@@ -2194,14 +2214,24 @@ function safeBuy(bldg,count) {
 
 function autoGodzamokAction() {
 	if ( T && FrozenCookies.autoGodzamok ) { // if Pantheon is here and autoGodzamok is set
-		if ( Game.hasGod('ruin') && ( Game.Objects['Cursor'].amount > 10 || Game.Objects['Farm'].amount > 10 ) ) {
+		if ( Game.hasGod('ruin') && ( Game.Objects['Cursor'].amount > 10 || Game.Objects['Grandma'].amount > 10 || Game.Objects['Farm'].amount > 10 || Game.Objects['Mine'].amount > 10 || Game.Objects['Factory'].amount > 10 || Game.Objects['Bank'].amount > 10 || Game.Objects['Temple'].amount > 10 ) ) {
 			var countC = Game.Objects['Cursor'].amount;
-			var countF = Game.Objects['Farm'].amount-1;
+            var countG = Game.Objects['Grandma'].amount;
+			var countF = Game.Objects['Farm'].amount;
+            var countM = Game.Objects['Mine'].amount;
+            var countFy = Game.Objects['Factory'].amount;
+            var countB = Game.Objects['Bank'].amount;
+            var countT = Game.Objects['Temple'].amount;
 
 			//Automatically sell all cursors and farms (except one) during Dragonflight and Click Frenzy if you worship Godzamok and prevent rapid buy/sell spam
 			if ( ( FrozenCookies.autoGodzamok >= 1 ) && hasClickBuff() && !Game.hasBuff('Devastation') ) {
 				Game.Objects['Cursor'].sell( countC );
-				Game.Objects['Farm'].sell( countF );
+				Game.Objects['Grandma'].sell( countG );
+                Game.Objects['Farm'].sell( countF );
+                Game.Objects['Mine'].sell( countM );
+                Game.Objects['Factory'].sell( countFy );
+                Game.Objects['Bank'].sell( countB );
+                Game.Objects['Temple'].sell( countT );
 
 				if ( FrozenCookies.autoBuy == 1 ) {
 					if ( ( FrozenCookies.cursorLimit ) && countC > FrozenCookies.cursorMax ) {
@@ -2211,6 +2241,13 @@ function autoGodzamokAction() {
 						safeBuy( Game.Objects['Cursor'], countC );
 						logEvent( "AutoGodzamok", "Bought " + countC + " cursors" );
 					}
+                    if ( ( FrozenCookies.cursorLimit ) && countG > FrozenCookies.cursorMax ) {
+                        safeBuy( Game.Objects['Grandma'], FrozenCookies.cursorMax );
+                        logEvent( "AutoGodzamok", "Bought " + FrozenCookies.cursorMax + " grandmas" );
+                    } else {
+                        safeBuy( Game.Objects['Grandma'], countG );
+                        logEvent( "AutoGodzamok", "Bought " + countG + " grandmas" );
+                    }
 					if ( ( FrozenCookies.farmLimit ) && countF > ( FrozenCookies.farmMax - 1 ) )  {
 						safeBuy( Game.Objects['Farm'], FrozenCookies.farmMax - 1 );
 						logEvent( "AutoGodzamok", "Bought " + ( FrozenCookies.farmMax - 1 ) + " farms" );
@@ -2218,6 +2255,34 @@ function autoGodzamokAction() {
 						safeBuy( Game.Objects['Farm'], countF );
 						logEvent( "AutoGodzamok", "Bought " + countF + " farms" );
 					}
+                    if ( ( FrozenCookies.farmLimit ) && countM > ( FrozenCookies.farmMax - 1 ) )  {
+                        safeBuy( Game.Objects['Mine'], FrozenCookies.farmMax - 1 );
+                        logEvent( "AutoGodzamok", "Bought " + ( FrozenCookies.farmMax - 1 ) + " mines" );
+                    } else {
+                        safeBuy( Game.Objects['Mine'], countM );
+                        logEvent( "AutoGodzamok", "Bought " + countM + " mines" );
+                    }
+                    if ( ( FrozenCookies.farmLimit ) && countFy > ( FrozenCookies.farmMax - 1 ) )  {
+                        safeBuy( Game.Objects['Factory'], FrozenCookies.farmMax - 1 );
+                        logEvent( "AutoGodzamok", "Bought " + ( FrozenCookies.farmMax - 1 ) + " factories" );
+                    } else {
+                        safeBuy( Game.Objects['Factory'], countFy );
+                        logEvent( "AutoGodzamok", "Bought " + countFy + " factories" );
+                    }
+                    if ( ( FrozenCookies.farmLimit ) && countB > ( FrozenCookies.farmMax - 1 ) )  {
+                        safeBuy( Game.Objects['Bank'], FrozenCookies.farmMax - 1 );
+                        logEvent( "AutoGodzamok", "Bought " + ( FrozenCookies.farmMax - 1 ) + " banks" );
+                    } else {
+                        safeBuy( Game.Objects['Bank'], countB );
+                        logEvent( "AutoGodzamok", "Bought " + countB + " banks" );
+                    }
+                    if ( ( FrozenCookies.farmLimit ) && countT > ( FrozenCookies.farmMax - 1 ) )  {
+                        safeBuy( Game.Objects['Temple'], FrozenCookies.farmMax - 1 );
+                        logEvent( "AutoGodzamok", "Bought " + ( FrozenCookies.farmMax - 1 ) + " temples" );
+                    } else {
+                        safeBuy( Game.Objects['Temmple'], countT );
+                        logEvent( "AutoGodzamok", "Bought " + countT + " temples" );
+                    }
 				}
 			}
 		}
