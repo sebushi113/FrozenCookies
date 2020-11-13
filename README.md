@@ -21,7 +21,7 @@
 ***********
 
 
-
+/*
 
 FrozenCookies
 =============
@@ -182,3 +182,5 @@ From the Cookie Clicker IRC, thanks to the following users:
  - Saeldur, for helping make the timers suck less
  - Icehawk78, for writing this section and being a conceited ass
  - Other people who I've temporarily forgotten and will add later
+
+*/
